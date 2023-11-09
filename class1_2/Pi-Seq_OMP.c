@@ -1,3 +1,4 @@
+#include <omp.h>
 #include <stdio.h>
 
 #define f(A) (4.0 / (1.0 + A * A))
