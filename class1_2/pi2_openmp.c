@@ -1,3 +1,4 @@
+// with parallelization using sections with 8 threads
 #include <omp.h>
 #include <stdio.h>
 
@@ -8,16 +9,6 @@ const long long n = 1000000000;
 long long i;
 double x, pi;
 double w = 1.0 / n;
-
-// better solution for distribution
-// each thread has struct which contains partial sum
-// in the end we are summing partial sums
-
-typedef struct {
-  long long start;
-  long long end;
-  double partSolution;
-} input_t;
 
 double partPiFnc(long long start, long long end) {
   double sum = 0.0;
