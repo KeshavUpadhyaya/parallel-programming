@@ -1,0 +1,2 @@
+Notes:
+- boolean or (||) is faster than the bitwise (|) since it does lazy evaluation
