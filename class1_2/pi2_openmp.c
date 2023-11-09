@@ -24,7 +24,9 @@ int main(int argc, char *argv[]) {
   double sum = 0.0;
   long long stepWidth = n / NUM_OF_THREADS;
 
-#pragma omp parallel
+// it's better to specify the number of threads here as the the number of
+// sections just to make the code cleaner
+#pragma omp parallel num_threads(NUM_OF_THREADS)
   {
 #pragma omp sections
     {
@@ -54,7 +56,8 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  for (int j = 0; j < NUM_OF_THREADS; j++) sum += partResult[j];
+  for (int j = 0; j < NUM_OF_THREADS; j++)
+    sum += partResult[j];
 
   printf("pi = %.15f\n", w * sum);
   return 0;
