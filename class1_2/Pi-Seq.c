@@ -1,3 +1,4 @@
+// this code gives the wrong answer since there is no synchronization!
 #include <stdio.h>
 
 #define f(A) (4.0 / (1.0 + A * A))
