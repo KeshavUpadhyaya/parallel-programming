@@ -24,6 +24,6 @@ int main() {
   {
 
 #pragma omp master
-    printf(fibo(NN));
+    printf("answer = %d", fibo(NN));
   }
 }
