@@ -18,7 +18,7 @@ int fibo(int n) {
 }
 
 int main() {
-  int NN = 10000;
+  int NN = 100;
 
 #pragma omp parallel
   {
