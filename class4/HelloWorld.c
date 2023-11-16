@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// run with mpirun -n 4 --hostfile hostfile.txt --pernode ./a.out  for running
-// in 4 different machines
+// SSH into a linux lab machine & run in order to have access to other
+// machines.
+// Run with mpirun -n 4 --hostfile hostfile.txt --pernode ./a.out  for
+// execution in 4 different machines
 
 int main(int argc, char **argv) {
 
