@@ -24,6 +24,6 @@ int main() {
   {
 
 #pragma omp master
-    fibo(NN);
+    print(fibo(NN));
   }
 }
