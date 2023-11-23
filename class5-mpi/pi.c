@@ -1,4 +1,7 @@
+
+#include <mpi.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define f(A) (4.0 / (1.0 + A * A))
 
@@ -23,11 +26,27 @@ int main(int argc, char *argv[]) {
   double w = 1.0 / n;
   sum = 0.0;
 
-  for (i = 0; i < n; i++) {
-    x = w * ((double)i + 0.5);
-    sum = sum + f(x);
-  }
+  int size = 0, rank = 0;
+  char hn[128];
+  gethostname(hn, 128);
 
-  printf("pi = %.15f\n", w * sum);
+  // MUST BE CALLED at first
+  MPI_Init(NULL, NULL);
+
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  long long stepWidth = n / size;
+
+  // calculate start, end
+  long long start = rank * stepWidth;
+  long long end = (rank + 1) * stepWidth;
+
+  // calculate part sum
+  double partSum = partPiFnc(start, end);
+
+  printf("pi part from rank %d = %lf", rank, partSum);
+
+  // printf("pi = %.15f\n", w * sum);
   return 0;
 }
