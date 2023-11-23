@@ -9,7 +9,7 @@ const long long n = 10000000000;
 
 double x, pi;
 double w = 1.0 / n;
-double sum = 0.0;
+double finalSum = 0.0;
 
 double partPiFnc(long long start, long long end) {
   double sum = 0.0;
@@ -47,17 +47,18 @@ int main(int argc, char *argv[]) {
   // consider 0 as the main node
   if (rank == 0) {
     // add partSum of node 0
-    sum += partSum;
+    finalSum += partSum;
     // ignore 0 - don't receive from itself
     for (int i = 1; i < size; i++) {
-      // receive data
+      // receive data - the below function is a blocking function so it waits to
+      // recieve
       MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD,
                MPI_STATUSES_IGNORE);
       printf("Received part sum %lf from %d\n", receivePartSum, i);
-      sum += receivePartSum;
+      finalSum += receivePartSum;
     }
 
-    printf("pi = %.15f\n", w * sum);
+    printf("pi = %.15f\n", w * finalSum);
 
   } else {
     // send data
