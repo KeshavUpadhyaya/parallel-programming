@@ -3,7 +3,6 @@ pc02
 pc03
 pc04
 pc05
-pc06
 pc07
 pc09
 pc10
