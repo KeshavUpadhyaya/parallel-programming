@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+// mpirun -n 512 --npernode 24 --oversubscribe --hostfile hostfile.txt ./a.out
+// it creates 512 processes and 24 processes per node
+
 #define f(A) (4.0 / (1.0 + A * A))
 
 const long long n = 10000000000;
@@ -54,6 +57,11 @@ int main(int argc, char *argv[]) {
       // recieve
       MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD,
                MPI_STATUSES_IGNORE);
+
+      // You can use MPI_ANY_SOURCE to get from any node instead of receiving
+      // from specific ones - MUCH FASTER!!
+      //  MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, MPI_ANY_SOURCE, 1,
+      //  MPI_COMM_WORLD,     MPI_STATUSES_IGNORE);
       printf("Received part sum %lf from %d\n", receivePartSum, i);
       finalSum += receivePartSum;
     }
