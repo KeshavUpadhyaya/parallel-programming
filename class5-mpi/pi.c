@@ -72,5 +72,8 @@ int main(int argc, char *argv[]) {
     MPI_Send(&partSum, 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
   }
 
+  // MUST BE CALLED at the end
+  MPI_Finalize();
+
   return 0;
 }
