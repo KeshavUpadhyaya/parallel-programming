@@ -63,7 +63,6 @@ int main(int argc, char *argv[]) {
       // from specific ones - MUCH FASTER!!
       //  MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, MPI_ANY_SOURCE, 1,
       //  MPI_COMM_WORLD,     MPI_STATUSES_IGNORE);
-      printf("Received part sum %lf from %d\n", receivePartSum, i);
       finalSum += receivePartSum;
     }
 
