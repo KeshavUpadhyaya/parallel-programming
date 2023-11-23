@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 
   if (rank == 0) {
     // receive data
+    sum += partSum;
     for (int i = 0; i < size; i++) {
       MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD,
                MPI_STATUSES_IGNORE);
