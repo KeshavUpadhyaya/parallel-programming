@@ -44,20 +44,25 @@ int main(int argc, char *argv[]) {
   printf("pi part from rank %d = %lf", rank, partSum);
   double receivePartSum = 0;
 
+  // consider 0 as the main node
   if (rank == 0) {
-    // receive data
+    // add partSum of node 0
     sum += partSum;
+    // ignore 0 - don't receive from itself
     for (int i = 1; i < size; i++) {
+      // receive data
       MPI_Recv(&receivePartSum, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD,
                MPI_STATUSES_IGNORE);
       printf("Received part sum %lf from %d\n", receivePartSum, i);
       sum += receivePartSum;
     }
+
+    printf("pi = %.15f\n", w * sum);
+
   } else {
     // send data
     MPI_Send(&partSum, 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
   }
 
-  printf("pi = %.15f\n", w * sum);
   return 0;
 }
