@@ -56,8 +56,10 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  for (int j = 0; j < NUM_OF_THREADS; j++)
+  for (int j = 0; j < NUM_OF_THREADS; j++) {
+    printf("part result = %lf", partResult[j]);
     sum += partResult[j];
+  }
 
   printf("pi = %.15f\n", w * sum);
   return 0;
