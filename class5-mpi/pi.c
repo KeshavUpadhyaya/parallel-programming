@@ -45,7 +45,6 @@ int main(int argc, char *argv[]) {
   // calculate part sum
   double partSum = partPiFnc(start, end);
 
-  printf("pi part from rank %d = %lf", rank, partSum);
   double receivePartSum = 0;
 
   // consider 0 as the main node
