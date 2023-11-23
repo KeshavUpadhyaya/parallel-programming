@@ -69,7 +69,8 @@ int main(int argc, char *argv[]) {
 
   } else {
     // send data
-    MPI_Send(&partSum, 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
+    // MPI_Ssend is better since MPI_Send is implementation dependent
+    MPI_Ssend(&partSum, 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
   }
 
   // MUST BE CALLED at the end
