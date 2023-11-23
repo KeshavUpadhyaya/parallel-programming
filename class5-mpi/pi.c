@@ -5,6 +5,7 @@
 
 // mpirun -n 512 --npernode 24 --oversubscribe --hostfile hostfile.txt ./a.out
 // it creates 512 processes and 24 processes per node
+// you need to have atleast 512/24 processes per node
 
 #define f(A) (4.0 / (1.0 + A * A))
 
