@@ -7,9 +7,8 @@
 
 const long long n = 10000000000;
 
-double x, sum, pi;
+double x, pi;
 double w = 1.0 / n;
-sum = 0.0;
 
 double partPiFnc(long long start, long long end) {
   double sum = 0.0;
@@ -21,11 +20,6 @@ double partPiFnc(long long start, long long end) {
 }
 
 int main(int argc, char *argv[]) {
-  long long i;
-  double x, sum, pi;
-  double w = 1.0 / n;
-  sum = 0.0;
-
   int size = 0, rank = 0;
   char hn[128];
   gethostname(hn, 128);
