@@ -47,6 +47,8 @@ void test_bandwidth(int rank, int size, int message_size) {
     MPI_Recv(message, message_size, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD,
              &status);
   }
+
+  free(message); // freeing after use
 }
 
 int main(int argc, char const *argv[]) {
