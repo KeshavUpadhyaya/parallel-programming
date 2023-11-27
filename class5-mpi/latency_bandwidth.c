@@ -18,7 +18,7 @@ void test_latency(int rank, int size, int N) {
       end_time = MPI_Wtime();
       total_latency += (end_time - start_time);
     }
-    printf("total latency = %lf\n", total_latency);
+    printf("Latency: %lf ns\n", total_latency / ((2 * N) * 1E9));
 
   } else if (rank == 1) {
     for (int i = 0; i < N; i++) {
