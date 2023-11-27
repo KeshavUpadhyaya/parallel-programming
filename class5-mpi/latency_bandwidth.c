@@ -17,14 +17,14 @@ void test_latency(int rank, int size, int N) {
       end_time = MPI_Wtime();
       total_latency += (end_time - start_time);
     }
+    printf("total latency = %lf\n", total_latency);
+
   } else if (rank == 1) {
     for (int i = 0; i < N; i++) {
       MPI_Recv(&data, 1, MPI_FLOAT, 0, TAG_PING, MPI_COMM_WORLD, &status);
       MPI_Ssend(&data, 1, MPI_FLOAT, 0, TAG_PONG, MPI_COMM_WORLD);
     }
   }
-
-  printf("total latency = %lf\n", total_latency);
 }
 
 int main(int argc, char const *argv[]) {
