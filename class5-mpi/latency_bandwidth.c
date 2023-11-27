@@ -62,7 +62,7 @@ int main(int argc, char const *argv[]) {
   test_latency(rank, size, N);
 
   int message_size = 1024 * 1024 * 10; // 10MB
-  bandwidth_test(rank, size, message_size);
+  test_bandwidth(rank, size, message_size);
 
   MPI_Finalize();
   return 0;
