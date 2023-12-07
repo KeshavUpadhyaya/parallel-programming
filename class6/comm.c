@@ -14,8 +14,8 @@ int main(int argc, char const *argv[]) {
   int color = wRank % 3;
   MPI_Comm_split(MPI_COMM_WORLD, color, 0, &subComm);
 
-  MPI_Comm_size(MPI_COMM_WORLD, &sSize);
-  MPI_Comm_rank(MPI_COMM_WORLD, &sRank);
+  MPI_Comm_size(subComm, &sSize);
+  MPI_Comm_rank(subComm, &sRank);
 
   printf(
       "World Size: %d World rank : %d Color: %d Sub size: %d Sub rank: %d \n",
