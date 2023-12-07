@@ -10,8 +10,8 @@ int main(int argc, char const *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &wSize);
   MPI_Comm_rank(MPI_COMM_WORLD, &wRank);
 
-  printf("World Size: %d World rank : %d\n", &wSize, &wRank);
-  printf("Sub size: %d Sub rank: %d", &sSize, &sRank);
+  printf("World Size: %d World rank : %d\n", wSize, wRank);
+  printf("Sub size: %d Sub rank: %d", sSize, sRank);
 
   MPI_Finalize();
   return 0;
