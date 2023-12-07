@@ -32,6 +32,7 @@ void test_latency(int rank, int size) {
 }
 
 void test_bandwidth(int rank, int size) {
+  print("Computing bandwidth for various buffer sizes...\n");
   double start_time, end_time;
   MPI_Status status;
 
