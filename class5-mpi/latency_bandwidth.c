@@ -40,7 +40,7 @@ void test_bandwidth(int rank, int size, int message_size) {
     MPI_Send(message, message_size, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
     end_time = MPI_Wtime();
 
-    double latency = (end_time - start_time) / 2 * 1E9;
+    double latency = (end_time - start_time) * 1E9;
     double bandwidth = message_size / (end_time - start_time);
     printf("Bandwidth: %lf MB/s\n", bandwidth / (1024 * 1024));
 
