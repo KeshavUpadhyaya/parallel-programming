@@ -41,6 +41,8 @@ void test_bandwidth(int rank, int size) {
 
   if (rank == 0) {
     printf("Computing bandwidth for various buffer sizes...\n");
+    printf("| Size (bytes) | Bandwidth (GB/s) |\n");
+    printf("|--------------:|------------------:|\n");
     for (int j = startSize; j < maxSize; j = j * 2) {
 
       start_time = MPI_Wtime();
@@ -52,8 +54,7 @@ void test_bandwidth(int rank, int size) {
 
       double latency = (end_time - start_time);
       double bandwidth = j * N / (end_time - start_time);
-      printf("| Size (bytes) | Bandwidth (GB/s) |\n");
-      printf("|--------------:|------------------:|\n");
+
       printf("| %13d | %16lf |\n", j, (bandwidth / (1024 * 1024 * 1024)));
     }
 
