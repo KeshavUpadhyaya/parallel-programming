@@ -4,18 +4,16 @@
 
 #define TAG_PING 17
 #define TAG_PONG 23
+#define N 100
 
-void test_latency(int rank, int size, int N) {
+void test_latency(int rank, int size) {
   double start_time, end_time, total_latency = 0.0;
   MPI_Status status;
   float data = 1.7;
 
   if (rank == 0) {
-    MPI_Ssend(&data, 1, MPI_FLOAT, 1, TAG_PING, MPI_COMM_WORLD);
-    MPI_Recv(&data, 1, MPI_FLOAT, 1, TAG_PONG, MPI_COMM_WORLD, &status);
-
     start_time = MPI_Wtime();
-    for (int i = 0; i < N - 1; i++) {
+    for (int i = 0; i < N; i++) {
       MPI_Ssend(&data, 1, MPI_FLOAT, 1, TAG_PING, MPI_COMM_WORLD);
       MPI_Recv(&data, 1, MPI_FLOAT, 1, TAG_PONG, MPI_COMM_WORLD, &status);
     }
@@ -25,11 +23,7 @@ void test_latency(int rank, int size, int N) {
     printf("Latency: %lf ns\n", total_latency / (2 * N) * 1E9);
 
   } else if (rank == 1) {
-    // moved it out so that set up happens before the loop
-    MPI_Recv(&data, 1, MPI_FLOAT, 0, TAG_PING, MPI_COMM_WORLD, &status);
-    MPI_Ssend(&data, 1, MPI_FLOAT, 0, TAG_PONG, MPI_COMM_WORLD);
-
-    for (int i = 0; i < N - 1; i++) {
+    for (int i = 0; i < N; i++) {
       MPI_Recv(&data, 1, MPI_FLOAT, 0, TAG_PING, MPI_COMM_WORLD, &status);
       MPI_Ssend(&data, 1, MPI_FLOAT, 0, TAG_PONG, MPI_COMM_WORLD);
     }
@@ -44,12 +38,15 @@ void test_bandwidth(int rank, int size, int message_size) {
 
   if (rank == 0) {
     start_time = MPI_Wtime();
-    MPI_Send(message, message_size, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
+    for (size_t i = 0; i < N; i++) {
+      MPI_Send(message, message_size, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
+    }
+
     end_time = MPI_Wtime();
 
     double latency = (end_time - start_time);
     double bandwidth = message_size / (end_time - start_time);
-    printf("Bandwidth: %lf MB/s\n", bandwidth / (1024 * 1024));
+    printf("Bandwidth: %lf MB/s\n", (bandwidth / (1024 * 1024)) / N);
 
   } else if (rank == 1) {
     MPI_Recv(message, message_size, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD,
@@ -66,8 +63,7 @@ int main(int argc, char const *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-  int N = 1000;
-  // test_latency(rank, size, N);
+  test_latency(rank, size);
 
   int message_size = 1024 * 1024 * 10; // 10MB
   test_bandwidth(rank, size, message_size);
