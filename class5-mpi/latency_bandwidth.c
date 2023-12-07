@@ -74,7 +74,7 @@ int main(int argc, char const *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-  // test_latency(rank, size);
+  test_latency(rank, size);
 
   test_bandwidth(rank, size);
 
