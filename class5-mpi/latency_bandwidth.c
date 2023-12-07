@@ -4,7 +4,7 @@
 
 #define TAG_PING 17
 #define TAG_PONG 23
-#define N 100
+#define N 10
 
 void test_latency(int rank, int size) {
   double start_time, end_time, total_latency = 0.0;
