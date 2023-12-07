@@ -52,8 +52,9 @@ void test_bandwidth(int rank, int size) {
 
       double latency = (end_time - start_time);
       double bandwidth = j * N / (end_time - start_time);
-      printf("[Size: %d bytes] Bandwidth =  %lf GB/s\n", j,
-             (bandwidth / (1024 * 1024 * 1024)));
+      printf("| Size (bytes) | Bandwidth (GB/s) |\n");
+      printf("|--------------:|------------------:|\n");
+      printf("| %13d | %16lf |\n", j, (bandwidth / (1024 * 1024 * 1024)));
     }
 
   } else if (rank == 1) {
