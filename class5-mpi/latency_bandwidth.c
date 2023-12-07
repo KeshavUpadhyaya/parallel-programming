@@ -40,8 +40,9 @@ void test_bandwidth(int rank, int size) {
   int maxSize = 10 * 1024 * 1024; // 10 MB
   char *message = (char *)malloc(maxSize);
 
-  for (int j = startSize; j < maxSize; j = j * 2) {
-    if (rank == 0) {
+  if (rank == 0) {
+    for (int j = startSize; j < maxSize; j = j * 2) {
+
       start_time = MPI_Wtime();
       for (int i = 0; i < N; i++) {
         MPI_Send(message, j, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
@@ -53,8 +54,11 @@ void test_bandwidth(int rank, int size) {
       double bandwidth = j * N / (end_time - start_time);
       printf("[Size: %d bytes] Bandwidth =  %lf GB/s\n", j,
              (bandwidth / (1024 * 1024 * 1024)));
+    }
 
-    } else if (rank == 1) {
+  } else if (rank == 1) {
+    for (int j = startSize; j < maxSize; j = j * 2) {
+
       for (int i = 0; i < N; i++) {
         MPI_Recv(message, j, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD, &status);
       }
