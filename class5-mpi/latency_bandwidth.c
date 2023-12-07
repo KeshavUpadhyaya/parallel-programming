@@ -38,7 +38,7 @@ void test_bandwidth(int rank, int size, int message_size) {
 
   if (rank == 0) {
     start_time = MPI_Wtime();
-    for (size_t i = 0; i < N; i++) {
+    for (int i = 0; i < N; i++) {
       MPI_Send(message, message_size, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
     }
 
@@ -49,8 +49,10 @@ void test_bandwidth(int rank, int size, int message_size) {
     printf("Bandwidth: %lf MB/s\n", (bandwidth / (1024 * 1024)) / N);
 
   } else if (rank == 1) {
-    MPI_Recv(message, message_size, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD,
-             &status);
+    for (int i = 0; i < N; i++) {
+      MPI_Recv(message, message_size, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD,
+               &status);
+    }
   }
 
   free(message); // freeing after use
