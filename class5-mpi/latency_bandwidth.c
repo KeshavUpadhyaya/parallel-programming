@@ -11,8 +11,11 @@ void test_latency(int rank, int size, int N) {
   float data = 1.7;
 
   if (rank == 0) {
+    MPI_Ssend(&data, 1, MPI_FLOAT, 1, TAG_PING, MPI_COMM_WORLD);
+    MPI_Recv(&data, 1, MPI_FLOAT, 1, TAG_PONG, MPI_COMM_WORLD, &status);
+
     start_time = MPI_Wtime();
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N - 1; i++) {
       MPI_Ssend(&data, 1, MPI_FLOAT, 1, TAG_PING, MPI_COMM_WORLD);
       MPI_Recv(&data, 1, MPI_FLOAT, 1, TAG_PONG, MPI_COMM_WORLD, &status);
     }
@@ -22,7 +25,11 @@ void test_latency(int rank, int size, int N) {
     printf("Latency: %lf ns\n", total_latency / (2 * N) * 1E9);
 
   } else if (rank == 1) {
-    for (int i = 0; i < N; i++) {
+    // moved it out so that set up happens before the loop
+    MPI_Recv(&data, 1, MPI_FLOAT, 0, TAG_PING, MPI_COMM_WORLD, &status);
+    MPI_Ssend(&data, 1, MPI_FLOAT, 0, TAG_PONG, MPI_COMM_WORLD);
+
+    for (int i = 0; i < N - 1; i++) {
       MPI_Recv(&data, 1, MPI_FLOAT, 0, TAG_PING, MPI_COMM_WORLD, &status);
       MPI_Ssend(&data, 1, MPI_FLOAT, 0, TAG_PONG, MPI_COMM_WORLD);
     }
