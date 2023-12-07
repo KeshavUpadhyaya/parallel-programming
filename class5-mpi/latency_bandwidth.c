@@ -20,7 +20,8 @@ void test_latency(int rank, int size) {
     end_time = MPI_Wtime();
     total_latency += (end_time - start_time);
 
-    printf("Latency: %lf ns\n", total_latency / (2 * N) * 1E9);
+    printf("Latency for sending floats: %lf ns\n",
+           total_latency / (2 * N) * 1E9);
 
   } else if (rank == 1) {
     for (int i = 0; i < N; i++) {
