@@ -31,31 +31,34 @@ void test_latency(int rank, int size) {
   }
 }
 
-void test_bandwidth(int rank, int size, int message_size) {
+void test_bandwidth(int rank, int size) {
   double start_time, end_time;
   MPI_Status status;
 
-  char *message = (char *)malloc(message_size);
+  int startSize = 1024;           //  1 KB
+  int maxSize = 10 * 1024 * 1024; // 10 MB
+  char *message = (char *)malloc(maxSize);
 
-  if (rank == 0) {
-    start_time = MPI_Wtime();
-    for (int i = 0; i < N; i++) {
-      MPI_Send(message, message_size, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
-    }
+  for (int j = startSize; j < maxSize; j = j * 2) {
+    if (rank == 0) {
+      start_time = MPI_Wtime();
+      for (int i = 0; i < N; i++) {
+        MPI_Send(message, j, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
+      }
 
-    end_time = MPI_Wtime();
+      end_time = MPI_Wtime();
 
-    double latency = (end_time - start_time);
-    double bandwidth = message_size * N / (end_time - start_time);
-    printf("Bandwidth: %lf MB/s\n", (bandwidth / (1024 * 1024)));
+      double latency = (end_time - start_time);
+      double bandwidth = j * N / (end_time - start_time);
+      printf("[Size: %d bytes] Bandwidth =  %lf MB/s\n", j,
+             (bandwidth / (1024 * 1024)));
 
-  } else if (rank == 1) {
-    for (int i = 0; i < N; i++) {
-      MPI_Recv(message, message_size, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD,
-               &status);
+    } else if (rank == 1) {
+      for (int i = 0; i < N; i++) {
+        MPI_Recv(message, j, MPI_CHAR, 0, TAG_PING, MPI_COMM_WORLD, &status);
+      }
     }
   }
-
   free(message); // freeing after use
 }
 
@@ -69,7 +72,7 @@ int main(int argc, char const *argv[]) {
   test_latency(rank, size);
 
   int message_size = 1024 * 1024 * 1; // 1MB
-  test_bandwidth(rank, size, message_size);
+  test_bandwidth(rank, size);
 
   MPI_Finalize();
   return 0;
