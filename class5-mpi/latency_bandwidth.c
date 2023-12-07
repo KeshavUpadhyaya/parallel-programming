@@ -45,7 +45,7 @@ void test_bandwidth(int rank, int size) {
 
       start_time = MPI_Wtime();
       for (int i = 0; i < N; i++) {
-        MPI_Send(message, j, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
+        MPI_Ssend(message, j, MPI_CHAR, 1, TAG_PING, MPI_COMM_WORLD);
       }
 
       end_time = MPI_Wtime();
@@ -76,7 +76,6 @@ int main(int argc, char const *argv[]) {
 
   // test_latency(rank, size);
 
-  int message_size = 1024 * 1024 * 1; // 1MB
   test_bandwidth(rank, size);
 
   MPI_Finalize();
