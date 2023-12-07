@@ -32,7 +32,6 @@ void test_latency(int rank, int size) {
 }
 
 void test_bandwidth(int rank, int size) {
-  printf("Computing bandwidth for various buffer sizes...\n");
   double start_time, end_time;
   MPI_Status status;
 
@@ -41,6 +40,7 @@ void test_bandwidth(int rank, int size) {
   char *message = (char *)malloc(maxSize);
 
   if (rank == 0) {
+    printf("Computing bandwidth for various buffer sizes...\n");
     for (int j = startSize; j < maxSize; j = j * 2) {
 
       start_time = MPI_Wtime();
