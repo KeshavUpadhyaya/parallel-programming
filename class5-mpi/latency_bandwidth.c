@@ -45,8 +45,8 @@ void test_bandwidth(int rank, int size, int message_size) {
     end_time = MPI_Wtime();
 
     double latency = (end_time - start_time);
-    double bandwidth = message_size / (end_time - start_time);
-    printf("Bandwidth: %lf MB/s\n", (bandwidth / (1024 * 1024)) / N);
+    double bandwidth = message_size * N / (end_time - start_time);
+    printf("Bandwidth: %lf MB/s\n", (bandwidth / (1024 * 1024)));
 
   } else if (rank == 1) {
     for (int i = 0; i < N; i++) {
