@@ -50,8 +50,8 @@ void test_bandwidth(int rank, int size) {
 
       double latency = (end_time - start_time);
       double bandwidth = j * N / (end_time - start_time);
-      printf("[Size: %d bytes] Bandwidth =  %lf MB/s\n", j,
-             (bandwidth / (1024 * 1024)));
+      printf("[Size: %d bytes] Bandwidth =  %lf GB/s\n", j,
+             (bandwidth / (1024 * 1024 * 1024)));
 
     } else if (rank == 1) {
       for (int i = 0; i < N; i++) {
