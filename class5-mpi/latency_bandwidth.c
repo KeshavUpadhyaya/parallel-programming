@@ -11,13 +11,14 @@ void test_latency(int rank, int size, int N) {
   float data = 1.7;
 
   if (rank == 0) {
+    start_time = MPI_Wtime();
     for (int i = 0; i < N; i++) {
-      start_time = MPI_Wtime();
       MPI_Ssend(&data, 1, MPI_FLOAT, 1, TAG_PING, MPI_COMM_WORLD);
       MPI_Recv(&data, 1, MPI_FLOAT, 1, TAG_PONG, MPI_COMM_WORLD, &status);
-      end_time = MPI_Wtime();
-      total_latency += (end_time - start_time);
     }
+    end_time = MPI_Wtime();
+    total_latency += (end_time - start_time);
+
     printf("Latency: %lf ns\n", total_latency / (2 * N) * 1E9);
 
   } else if (rank == 1) {
