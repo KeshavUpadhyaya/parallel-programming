@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
              MPI_SUM, 0 /*dest_process*/, MPI_COMM_WORLD);
 
   if (rank == 0) {
-    printf("sum of all local_n : %d", n);
+    printf("sum of all local_n : %d\n", n);
   }
 
   MPI_Finalize();
