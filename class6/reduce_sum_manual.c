@@ -3,6 +3,7 @@
 
 int main(int argc, char **argv) {
   MPI_Init(0, 0);
+  double start_time, end_time;
 
   int size = 0, rank = 0;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -13,6 +14,8 @@ int main(int argc, char **argv) {
   int recvRank;
 
   if (rank == 0) {
+    start_time = MPI_Wtime();
+
     // add partSum of node 0
     n += local_n;
     for (int i = 1; i < size; i++) {
@@ -22,7 +25,10 @@ int main(int argc, char **argv) {
       n += recvRank;
     }
 
+    end_time = MPI_Wtime();
+
     printf("sum of all local_n : %d\n", n);
+    printf("Latency Manual: %lf ns\n", (end_time - start_time) * 1E9);
 
   } else {
     // send data
