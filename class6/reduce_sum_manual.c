@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     end_time = MPI_Wtime();
 
     printf("sum of all local_n : %d\n", n);
-    printf("Latency Manual: %lf n\n", (end_time - start_time));
+    printf("Latency Manual: %lf s\n", (end_time - start_time));
 
   } else {
     // send data
