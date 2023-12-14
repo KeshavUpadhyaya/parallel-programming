@@ -13,7 +13,7 @@ int main(int argc, char const *argv[]) {
 
   MPI_Reduce(&local_n /*send_buf*/, &n /*recv_buf*/, 1 /*count*/, MPI_INT,
              MPI_SUM, 0 /*dest_process*/, MPI_COMM_WORLD);
-  printf("sum of all local_n : % f", n);
+  printf("sum of all local_n : %d", n);
 
   MPI_Finalize();
   return 0;
