@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 
       MPI_Recv(&recvRank, 1, MPI_INT, i, 1, MPI_COMM_WORLD,
                MPI_STATUSES_IGNORE);
-      n += local_n;
+      n += recvRank;
     }
 
     printf("sum of all local_n : %d\n", n);
