@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
 
   if (rank == 0) {
     printf("sum of all local_n : %d\n", n);
-    printf("Latency MPI_Reduce: %lf ns\n", (end_time - start_time) * 1E9);
+    printf("Latency MPI_Reduce: %lf s\n", (end_time - start_time));
   }
 
   MPI_Finalize();
