@@ -37,10 +37,10 @@ void main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_File_open(MPI_COMM_WORLD, "my_test_file",
-                MPI_MODE_CREATE | MPI_MODE_APPEND, MPI_INFO_NULL, &fh);
+                MPI_MODE_CREATE | MPI_MODE_WRONLY, MPI_INFO_NULL, &fh);
 
   for (i = 0; i < 5; i++) {
-    buf = 'a' + my_rank;
+    buf = 'a';
     offset = my_rank * sizeof(char);
     MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
   }
