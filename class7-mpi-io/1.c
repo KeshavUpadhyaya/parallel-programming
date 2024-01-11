@@ -19,7 +19,7 @@
 
 #include <mpi.h>
 #include <stdio.h>
-
+// parallel writing
 void main(int argc, char *argv[]) {
   int my_rank, size, i;
 
@@ -41,7 +41,7 @@ void main(int argc, char *argv[]) {
 
   for (i = 0; i < 5; i++) {
     buf = 'a' + my_rank;
-    offset = (my_rank * sizeof(char));
+    offset = my_rank + (size * i);
     MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
   }
 
