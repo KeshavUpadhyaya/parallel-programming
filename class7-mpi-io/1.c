@@ -41,8 +41,9 @@ void main(int argc, char *argv[]) {
 
   for (i = 0; i < 5; i++) {
     buf = 'a' + my_rank;
-    offset = my_rank + (size * i);
-    MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
+    // output will be abcdabcdabcdabcdabcd if you run for 4 nodes
+    offset = size;
+    MPI_File_write_at(fh, my_rank + (offset * i), &buf, 1, MPI_CHAR, &status);
   }
 
   MPI_File_close(&fh);
@@ -50,4 +51,28 @@ void main(int argc, char *argv[]) {
   printf("PE%d\n", my_rank);
 
   MPI_Finalize();
+
+  /*
+    Note: all nodes write to the same file
+    Offset explanation for when it runs on the first node:
+    Assume size = 4
+    So 4 nodes: 0 1 2 3
+
+    first node: my_rank = 0
+    => buf = 'a'+ rank =  'a' + 0 = 'a'
+    i = 0
+    0 + (4 * 0) = 0 -> 'a' gets written on 0th place
+
+    i = 1
+    0 + (4 * 1) = 4 -> 'a' gets written on 4th place
+
+    i = 2
+    0 + (4 * 2) = 8 -> 'a' gets written on 8th place
+
+    i = 3
+    0 + (4 * 3) = 12 -> 'a' gets written on 12th place
+
+    i = 4
+    0 + (4 * 4) = 16-> 'a' gets written on 16th place
+  */
 }

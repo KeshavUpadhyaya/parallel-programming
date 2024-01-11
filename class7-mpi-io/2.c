@@ -28,7 +28,7 @@ void main(int argc, char *argv[]) {
   MPI_File fh;
   MPI_Datatype etype;
   MPI_Datatype filetype;
-  ____ disp;
+  int disp;
   MPI_Status status;
 
   char buf;
@@ -39,24 +39,24 @@ void main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   etype = MPI_CHAR;
-  ndims = ____;
-  array_of_sizes[0] = ____;
-  array_of_subsizes[0] = ____;
-  array_of_starts[0] = ____;
+  ndims = 1;
+  array_of_sizes[0] = size;
+  array_of_subsizes[0] = 1;
+  array_of_starts[0] = my_rank;
   order = MPI_ORDER_C;
   MPI_Type_create_subarray(ndims, array_of_sizes, array_of_subsizes,
                            array_of_starts, order, etype, &filetype);
-  MPI_Type_____;
+  MPI_Type_commit(&filetype);
 
-  MPI_File_open(MPI_COMM_WORLD, "my_test_file", MPI_MODE_____ | MPI_MODE_____,
-                MPI_INFO_NULL, &fh);
+  MPI_File_open(MPI_COMM_WORLD, "my_test_file",
+                MPI_MODE_CREATE | MPI_MODE_WRONLY, MPI_INFO_NULL, &fh);
 
-  disp = ____;
+  disp = 0;
   MPI_File_set_view(fh, disp, etype, filetype, "native", MPI_INFO_NULL);
 
   for (i = 0; i < 5; i++) {
     buf = '0' + (char)my_rank;
-    MPI_File_write(___, ___, ___, etype, &status);
+    MPI_File_write(fh, &buf, 1, etype, &status);
   }
 
   MPI_File_close(&fh);
