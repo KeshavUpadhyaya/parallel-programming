@@ -40,8 +40,8 @@ void main(int argc, char *argv[]) {
                 MPI_MODE_CREATE | MPI_MODE_WRONLY, MPI_INFO_NULL, &fh);
 
   for (i = 0; i < 5; i++) {
-    buf = 'a';
-    offset = (my_rank * sizeof(char)) + i;
+    buf = 'a' + my_rank;
+    offset = (i * sizeof(char)) + my_rank;
     MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
   }
 
