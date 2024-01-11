@@ -41,7 +41,7 @@ void main(int argc, char *argv[]) {
 
   for (i = 0; i < 5; i++) {
     buf = 'a' + my_rank;
-    offset = (i * sizeof(char)) + my_rank;
+    offset = (my_rank * sizeof(char));
     MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
   }
 
