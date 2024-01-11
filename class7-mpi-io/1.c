@@ -41,7 +41,7 @@ void main(int argc, char *argv[]) {
 
   for (i = 0; i < 5; i++) {
     buf = 'a';
-    offset = sizeof(char);
+    offset = i * sizeof(char);
     MPI_File_write_at(fh, offset, &buf, 1, MPI_CHAR, &status);
   }
 
