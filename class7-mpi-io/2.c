@@ -55,7 +55,7 @@ void main(int argc, char *argv[]) {
   MPI_File_set_view(fh, disp, etype, filetype, "native", MPI_INFO_NULL);
 
   for (i = 0; i < 5; i++) {
-    buf = '0' + (char)my_rank;
+    buf = 'a' + (char)my_rank;
     MPI_File_write(fh, &buf, 1, etype, &status);
   }
 
