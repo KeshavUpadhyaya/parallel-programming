@@ -160,9 +160,9 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    /*printf("Solution: \n");
+    printf("Solution: \n");
 
-    printMatrix(matrix_c);*/
+    printMatrix(matrix_c);
 
     printf("Solution lower right corner: %.2f\n",
            matrix_c[MATRIX_SIZE - 1][MATRIX_SIZE - 1]);
