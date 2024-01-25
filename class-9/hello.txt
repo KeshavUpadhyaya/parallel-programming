@@ -1,0 +1,16 @@
+wget http://tau.uoregon.edu/pdt.tar.gz
+tar -xvzf pdt.tar.gz
+cd pdtoolkit-3.25.1
+./configure
+make -j 10
+make install -j 10
+export PATH=$PATH:/tmp/pdtoolkit-3.25.1/x86_64/bin
+
+b. Download TAU, unzip and install it:
+wget http://tau.uoregon.edu/tau.tgz
+tar -xvzf tau.tar.gz
+cd tau-2.33
+./configure -mpiinc=/usr/lib/x86_64-linux-gnu/openmpi/include
+-mpilib=/usr/lib/x86_64-linux-gnu/openmpi/lib -pdt=/tmp/pdtoolkit-3.25.1
+export PATH=$PATH:/tmp/tau-2.33/x86_64/bin
+make install -j 10
