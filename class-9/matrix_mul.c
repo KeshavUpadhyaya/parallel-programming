@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MATRIX_SIZE 8000
+#define MATRIX_SIZE 4
 
 void printMatrix(double **arr) {
 
